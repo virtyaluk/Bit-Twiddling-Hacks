@@ -6,79 +6,79 @@ Individually, the __code snippets here are in the public domain__ (unless otherw
 
 ## Contents
 
-- About the operation counting methodology
-- Compute the sign of an integer
-- Detect if two integers have opposite signs
-- Compute the integer absolute value (abs) without branching
-- Compute the minimum (min) or maximum (max) of two integers without branching
-- Determining if an integer is a power of 2
+- [About the operation counting methodology](#about-the-operation-counting-methodology)
+- [Compute the sign of an integer](#compute-the-sign-of-an-integer)
+- [Detect if two integers have opposite signs](#detect-if-two-integers-have-opposite-signs)
+- [Compute the integer absolute value (abs) without branching](#compute-the-integer-absolute-value-abs-without-branching)
+- [Compute the minimum (min) or maximum (max) of two integers without branching](#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching)
+- [Determining if an integer is a power of 2](#determining-if-an-integer-is-a-power-of-2)
 - Sign extending
-    - Sign extending from a constant bit-width
-    - Sign extending from a variable bit-width
-    - Sign extending from a variable bit-width in 3 operations
-- Conditionally set or clear bits without branching
-- Conditionally negate a value without branching
-- Merge bits from two values according to a mask
+    - [Sign extending from a constant bit-width](#sign-extending-from-a-constant-bit-width)
+    - [Sign extending from a variable bit-width](#sign-extending-from-a-variable-bit-width)
+    - [Sign extending from a variable bit-width in 3 operations](#sign-extending-from-a-variable-bit-width-in-3-operations)
+- [Conditionally set or clear bits without branching](#conditionally-set-or-clear-bits-without-branching)
+- [Conditionally negate a value without branching](#conditionally-negate-a-value-without-branching)
+- [Merge bits from two values according to a mask](#merge-bits-from-two-values-according-to-a-mask)
 - Counting bits set
-    - Counting bits set, naive way
-    - Counting bits set by lookup table
-    - Counting bits set, Brian Kernighan's way
-    - Counting bits set in 14, 24, or 32-bit words using 64-bit instructions
-    - Counting bits set, in parallel
-    - Count bits set (rank) from the most-significant bit upto a given position
-    - Select the bit position (from the most-significant bit) with the given count (rank)
+    - [Counting bits set, naive way](#counting-bits-set-naive-way)
+    - [Counting bits set by lookup table](#counting-bits-set-by-lookup-table)
+    - [Counting bits set, Brian Kernighan's way](#counting-bits-set-brian-kernighans-way)
+    - [Counting bits set in 14, 24, or 32-bit words using 64-bit instructions](#counting-bits-set-in-14-24-or-32-bit-words-using-64-bit-instructions)
+    - [Counting bits set, in parallel](#counting-bits-set-in-parallel)
+    - [Count bits set (rank) from the most-significant bit upto a given position](#count-bits-set-rank-from-the-most-significant-bit-upto-a-given-position)
+    - [Select the bit position (from the most-significant bit) with the given count (rank)](#select-the-bit-position-from-the-most-significant-bit-with-the-given-count-rank)
 - Computing parity (1 if an odd number of bits set, 0 otherwise)
-    - Compute parity of a word the naive way
-    - Compute parity by lookup table
-    - Compute parity of a byte using 64-bit multiply and modulus division
-    - Compute parity of word with a multiply
-    - Compute parity in parallel
+    - [Compute parity of a word the naive way](#computing-parity-the-naive-way)
+    - [Compute parity by lookup table](#compute-parity-by-lookup-table)
+    - [Compute parity of a byte using 64-bit multiply and modulus division](#compute-parity-of-a-byte-using-64-bit-multiply-and-modulus-division)
+    - [Compute parity of word with a multiply](#compute-parity-of-word-with-a-multiply)
+    - [Compute parity in parallel](#compute-parity-in-parallel)
 - Swapping Values
-    - Swapping values with subtraction and addition
-    - Swapping values with XOR
-    - Swapping individual bits with XOR
+    - [Swapping values with subtraction and addition](#swapping-values-with-subtraction-and-addition)
+    - [Swapping values with XOR](#swapping-values-with-xor)
+    - [Swapping individual bits with XOR](#swapping-individual-bits-with-xor)
 - Reversing bit sequences
-    - Reverse bits the obvious way
-    - Reverse bits in word by lookup table
-    - Reverse the bits in a byte with 3 operations (64-bit multiply and modulus division)
-    - Reverse the bits in a byte with 4 operations (64-bit multiply, no division)
-    - Reverse the bits in a byte with 7 operations (no 64-bit, only 32)
-    - Reverse an N-bit quantity in parallel with 5 * lg(N) operations
-- Modulus division (aka computing remainders)
-    - Computing modulus division by 1 << s without a division operation (obvious)
-    - Computing modulus division by (1 << s) - 1 without a division operation
-    - Computing modulus division by (1 << s) - 1 in parallel without a division operation
+    - [Reverse bits the obvious way](#reverse-bits-the-obvious-way)
+    - [Reverse bits in word by lookup table](#reverse-bits-in-word-by-lookup-table)
+    - [Reverse the bits in a byte with 3 operations (64-bit multiply and modulus division)](#reverse-the-bits-in-a-byte-with-3-operations-64-bit-multiply-and-modulus-division)
+    - [Reverse the bits in a byte with 4 operations (64-bit multiply, no division)](#reverse-the-bits-in-a-byte-with-4-operations-64-bit-multiply-no-division)
+    - [Reverse the bits in a byte with 7 operations (no 64-bit, only 32)](#reverse-the-bits-in-a-byte-with-7-operations-no-64-bit)
+    - [Reverse an N-bit quantity in parallel with 5 * lg(N) operations](#reverse-an-n-bit-quantity-in-parallel-in-5--lgn-operations)
+- Modulus division (aka computing remainders
+    - [Computing modulus division by 1 << s without a division operation (obvious)](#compute-modulus-division-by-1--s-without-a-division-operator)
+    - [Computing modulus division by (1 << s) - 1 without a division operation](#compute-modulus-division-by-1--s---1-without-a-division-operator)
+    - [Computing modulus division by (1 << s) - 1 in parallel without a division operation](#compute-modulus-division-by-1--s---1-in-parallel-without-a-division-operator)
 - Finding integer log base 2 of an integer (aka the position of the highest bit set)
-    - Find the log base 2 of an integer with the MSB N set in O(N) operations (the obvious way)
-    - Find the integer log base 2 of an integer with an 64-bit IEEE float
-    - Find the log base 2 of an integer with a lookup table
-    - Find the log base 2 of an N-bit integer in O(lg(N)) operations
-    - Find the log base 2 of an N-bit integer in O(lg(N)) operations with multiply and lookup
-- Find integer log base 10 of an integer
-- Find integer log base 10 of an integer the obvious way
-- Find integer log base 2 of a 32-bit IEEE float
-- Find integer log base 2 of the pow(2, r)-root of a 32-bit IEEE float (for unsigned integer r)
+    - [Find the log base 2 of an integer with the MSB N set in O(N) operations (the obvious way)](#find-the-log-base-2-of-an-integer-with-the-msb-n-set-in-on-operations-the-obvious-way)
+    - [Find the integer log base 2 of an integer with an 64-bit IEEE float](#find-the-integer-log-base-2-of-an-integer-with-an-64-bit-ieee-float)
+    - [Find the log base 2 of an integer with a lookup table](#find-the-log-base-2-of-an-integer-with-a-lookup-table)
+    - [Find the log base 2 of an N-bit integer in O(lg(N)) operations](#find-the-log-base-2-of-an-n-bit-integer-in-olgn-operations)
+    - [Find the log base 2 of an N-bit integer in O(lg(N)) operations with multiply and lookup](#find-the-log-base-2-of-an-n-bit-integer-in-olgn-operations-with-multiply-and-lookup)
+- [Find integer log base 10 of an integer](#find-integer-log-base-10-of-an-integer)
+- [Find integer log base 10 of an integer the obvious way](#find-integer-log-base-10-of-an-integer-the-obvious-way)
+- [Find integer log base 2 of a 32-bit IEEE float](#find-integer-log-base-2-of-a-32-bit-ieee-float)
+- [Find integer log base 2 of the pow(2, r)-root of a 32-bit IEEE float (for unsigned integer r)](#find-integer-log-base-2-of-the-pow2-r-root-of-a-32-bit-ieee-float-for-unsigned-integer-r)
 - Counting consecutive trailing zero bits (or finding bit indices)
-    - Count the consecutive zero bits (trailing) on the right linearly
-    - Count the consecutive zero bits (trailing) on the right in parallel
-    - Count the consecutive zero bits (trailing) on the right by binary search
-    - Count the consecutive zero bits (trailing) on the right by casting to a float
-    - Count the consecutive zero bits (trailing) on the right with modulus division and lookup
-    - Count the consecutive zero bits (trailing) on the right with multiply and lookup
-- Round up to the next highest power of 2 by float casting
-- Round up to the next highest power of 2
+    - [Count the consecutive zero bits (trailing) on the right linearly](#count-the-consecutive-zero-bits-trailing-on-the-right-linearly)
+    - [Count the consecutive zero bits (trailing) on the right in parallel](#count-the-consecutive-zero-bits-trailing-on-the-right-in-parallel)
+    - [Count the consecutive zero bits (trailing) on the right by binary search](#count-the-consecutive-zero-bits-trailing-on-the-right-by-binary-search)
+    - [Count the consecutive zero bits (trailing) on the right by casting to a float](#count-the-consecutive-zero-bits-trailing-on-the-right-by-casting-to-a-float)
+    - [Count the consecutive zero bits (trailing) on the right with modulus division and lookup](#count-the-consecutive-zero-bits-trailing-on-the-right-with-modulus-division-and-lookup)
+    - [Count the consecutive zero bits (trailing) on the right with multiply and lookup](#count-the-consecutive-zero-bits-trailing-on-the-right-with-multiply-and-lookup)
+- [Round up to the next highest power of 2 by float casting](#round-up-to-the-next-highest-power-of-2-by-float-casting)
+- [Round up to the next highest power of 2](#round-up-to-the-next-highest-power-of-2)
 - Interleaving bits (aka computing Morton Numbers)
-    - Interleave bits the obvious way
-    - Interleave bits by table lookup
-    - Interleave bits with 64-bit multiply
-    - Interleave bits by Binary Magic Numbers
+    - [Interleave bits the obvious way](#interleave-bits-the-obvious-way)
+    - [Interleave bits by table lookup](#interleave-bits-by-table-lookup)
+    - [Interleave bits with 64-bit multiply](#interleave-bits-with-64-bit-multiply)
+    - [Interleave bits by Binary Magic Numbers](#interleave-bits-by-binary-magic-numbers)
 - Testing for ranges of bytes in a word (and counting occurances found)
-    - Determine if a word has a zero byte
-    - Determine if a word has a byte equal to n
-    - Determine if a word has byte less than n
-    - Determine if a word has a byte greater than n
-    - Determine if a word has a byte between m and n
-- Compute the lexicographically next bit permutation
+    - [Determine if a word has a zero byte](#determine-if-a-word-has-a-zero-byte)
+    - [Determine if a word has a byte equal to n](#determine-if-a-word-has-a-byte-equal-to-n)
+    - [Determine if a word has byte less than n](#determine-if-a-word-has-a-byte-less-than-n)
+    - [Determine if a word has a byte greater than n](#determine-if-a-word-has-a-byte-greater-than-n)
+    - [Determine if a word has a byte between m and n](#determine-if-a-word-has-a-byte-between-m-and-n)
+- [Compute the lexicographically next bit permutation](#compute-the-lexicographically-next-bit-permutation)
 
 ## About the operation counting methodology
 
@@ -749,6 +749,7 @@ b = ((b * 0x80200802ULL) & 0x0884422110ULL) * 0x0101010101ULL >> 32;
 
 The following shows the flow of the bit values with the boolean variables a, b, c, d, e, f, g, and h, which comprise an 8-bit byte. Notice how the first multiply fans out the bit pattern to multiple copies, while the last multiply combines them in the fifth byte from the right.
 
+<pre>
                                                                                         abcd efgh (-> hgfe dcba)
 *                                                      1000 0000  0010 0000  0000 1000  0000 0010 (0x80200802)
 -------------------------------------------------------------------------------------------------
@@ -756,7 +757,7 @@ The following shows the flow of the bit values with the boolean variables a, b, 
 &                                           0000 1000  1000 0100  0100 0010  0010 0001  0001 0000 (0x0884422110)
 -------------------------------------------------------------------------------------------------
                                             0000 d000  h000 0c00  0g00 00b0  00f0 000a  000e 0000
-*                                           0000 0001  0000 0001  0000 0001  0000 0001  0000 0001 (0x0101010101)
+                                           0000 0001  0000 0001  0000 0001  0000 0001  0000 0001 (0x0101010101)
 -------------------------------------------------------------------------------------------------
                                             0000 d000  h000 0c00  0g00 00b0  00f0 000a  000e 0000
                                  0000 d000  h000 0c00  0g00 00b0  00f0 000a  000e 0000
@@ -772,6 +773,8 @@ The following shows the flow of the bit values with the boolean variables a, b, 
 -------------------------------------------------------------------------------------------------
                                                                                         hgfe dcba
                                                                                         
+</pre>
+
 Note that the last two steps can be combined on some processors because the registers can be accessed as bytes; just multiply so that a register stores the upper 32 bits of the result and the take the low byte. Thus, it may take only 6 operations.
 
 Devised by Sean Anderson, July 13, 2001.
@@ -1609,7 +1612,7 @@ To count the number of bytes in `x` that are between `m` and `n` (exclusive) in 
 
 Juha Järvi suggested `likelyhasbetween` on April 6, 2005. From there, Sean Anderson created `hasbetween` and `countbetween` on April 10, 2005.
 
-### Compute the lexicographically next bit permutation
+## Compute the lexicographically next bit permutation
 
 Suppose we have a pattern of `N` bits set to `1` in an integer and we want the next permutation of `N` `1` bits in a lexicographical sense. For example, if `N` is 3 and the bit pattern is `00010011`, the next patterns would be `00010101`, `00010110`, `00011001`, `00011010`, `00011100`, `00100011`, and so forth. The following is a fast way to compute the next permutation.
 
